@@ -79,11 +79,10 @@ export class UserController {
         throw new HttpException('LinkedIn URL not provided', HttpStatus.BAD_REQUEST);
       }
       const linkedInProfile = await this.linkedInService.scrapeUserProfile(user.linkedinurl);
-      const updatedUser = await this.userService.update(+id, {userName:linkedInProfile.userName,linkedinurl:user.linkedinurl})
+      const updatedUser = await this.userService.update(+id, {userName:linkedInProfile.userName,profilePicture:linkedInProfile.profilePicture,linkedinurl:user.linkedinurl})
       res.status(HttpStatus.OK).json({ message: 'User updated successfully', user: updatedUser });
     } catch (error) {
       res.status(error?.response?.status || HttpStatus.INTERNAL_SERVER_ERROR).json({message: error.message || 'Error fetching LinkedIn profile', error: error.message});
-
     }
   }
 

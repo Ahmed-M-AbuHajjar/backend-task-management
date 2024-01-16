@@ -23,10 +23,13 @@ export class LinkedInService {
 
       const nameElement = await driver.wait(until.elementLocated(By.css('.text-heading-xlarge')), 30000);
       const name = await nameElement.getText();
-      
+
+      const pictureElement = await driver.wait(until.elementLocated(By.css('.profile-photo-edit__preview')), 30000);
+      const picture = await pictureElement.getAttribute('src');
 
       return {
         userName:name,
+        profilePicture:picture
       };
     } catch(error){
       console.error('Error during LinkedIn scraping:', error.message);
